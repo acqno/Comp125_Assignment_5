@@ -1,5 +1,5 @@
-﻿var canvas = document.getElementById("gameCanvas");
-var ctx = canvas.getContext("2d");
+﻿var c = document.getElementById("gameCanvas");
+var ctx = c.getContext("2d");
 
 // Background image 
 
@@ -18,3 +18,15 @@ function render() {
         ctx.drawImage(backgroundImg, 0, 0);
     }
 }
+
+function main() {
+    var now = Date.Now();
+    var delta = now - then;
+
+    render();
+
+    requestAnimationFrame(main);
+}
+
+var then = Date.now();
+main();

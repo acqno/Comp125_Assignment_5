@@ -1,0 +1,15 @@
+﻿body {
+    background: #3B465D;
+}
+
+#page {
+    width: 800px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.newStyle1 {
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
+    color: #FFFFFF;
+    font-size: 48px;
+}
