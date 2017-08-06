@@ -1,5 +1,5 @@
 ﻿// Create the canvas
-var place = document.getElementById("page")
+var place = document.getElementById("")
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
 canvas.width = 574;
@@ -16,17 +16,16 @@ bgImage.onload = function () {
 bgImage.src = "images/background.jpg";
 
 
-// Monster image
+// Monster objects
 var monsterReady = false;
 var monsterImage = new Image();
+var monster = {};
+var monstersCaught = 0;
+
 monsterImage.onload = function () {
     monsterReady = true;
 };
 monsterImage.src = "images/fox.png";
-
-
-var monster = {};
-var monstersCaught = 0;
 
 
 // Reset the game when the user clicks on the monster
@@ -37,17 +36,31 @@ var reset = function () {
     monster.y = 32 + (Math.random() * (canvas.height - 64));
 };
 
+// Reset the game score when the user clicks reset score button
+function ResetScore() {
+    monstersCaught = 0;
+    reset();
+}
 
-addEventListener("click", function (e) {
-    if (e.clientX >= monster.x - 20 && monster.x + 175 >= e.clientX
-        && e.clientY >= monster.y - 20 && monster.y + 175 >= e.clientY)
-    {
-        monstersCaught++;
-        reset();
-        interval = interval / divideSpeed;
-        then = Date.now();
-    }
-}, false);
+
+function callEventListeners() {
+    var _rScore = document.getElementById("resetScore")
+
+    addEventListener("click", function (e) {
+        if (e.clientX >= monster.x - 10 && monster.x + 175 >= e.clientX
+            && e.clientY >= monster.y - 10 && monster.y + 200 >= e.clientY)
+        {
+            monstersCaught++;
+            reset();
+            //interval = interval / divideSpeed;
+            then = Date.now();
+        }
+    }, false);
+
+    _rScore.addEventListener("click", ResetScore, false);
+    
+}
+
 
 
 // Draw everything
@@ -90,3 +103,4 @@ requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame
 var then = Date.now();
 reset();
 main();
+callEventListeners();
