@@ -1,10 +1,10 @@
 ﻿// Create the canvas
-var place = document.getElementById("")
-var canvas = document.createElement("canvas");
+var place = document.getElementById("page")
+
+var canvas = document.getElementById("newCanvas");
 var ctx = canvas.getContext("2d");
-canvas.width = 574;
-canvas.height = 538;
-document.body.appendChild(canvas);
+var canLeft = canvas.offsetLeft;
+var canTop = canvas.offsetTop;
 
 // Speed / time variables 
 var DefaultSpeed = 3000;
@@ -31,6 +31,9 @@ monsterImage.onload = function () {
     monsterReady = true;
 };
 monsterImage.src = "images/fox.png";
+monsterImage.height = 144;
+monsterImage.width = 144;
+
 
 
 // Reset the game when the user clicks on the monster
@@ -60,15 +63,20 @@ function callEventListeners() {
     var _rScore = document.getElementById("resetScore");
     var _rSpeed = document.getElementById("resetSpeed");
 
-    addEventListener("click", function (e) {
-        if (e.clientX >= monster.x - 10 && monster.x + 175 >= e.clientX
-            && e.clientY >= monster.y - 10 && monster.y + 200 >= e.clientY)
+    canvas.addEventListener("click", function (e) {
+        var x = e.pageX - canLeft;
+        var y = e.pageY - canTop;
+
+        if (y > monster.y && y < monster.y + 400
+            && x > monster.x && x < 500)
         {
+
             monstersCaught++;
             reset();
             UpdatedSpeed = UpdatedSpeed / divideSpeed;
             then = Date.now();
         }
+    
     }, false);
 
     _rScore.addEventListener("click", ResetScore, false);
