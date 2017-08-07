@@ -6,6 +6,11 @@ canvas.width = 574;
 canvas.height = 538;
 document.body.appendChild(canvas);
 
+// Speed / time variables 
+var DefaultSpeed = 3000;
+var UpdatedSpeed = DefaultSpeed;
+var divideSpeed = 1.2;
+
 
 // Background image
 var bgReady = false;
@@ -38,13 +43,22 @@ var reset = function () {
 
 // Reset the game score when the user clicks reset score button
 function ResetScore() {
+    UpdatedSpeed = DefaultSpeed;
     monstersCaught = 0;
     reset();
+    then = Date.now();
 }
 
+// Reset speed of monster object 
+function ResetSpeed() {
+    UpdatedSpeed = DefaultSpeed;
+    then = Date.now();
+}
 
+// Event listeners 
 function callEventListeners() {
-    var _rScore = document.getElementById("resetScore")
+    var _rScore = document.getElementById("resetScore");
+    var _rSpeed = document.getElementById("resetSpeed");
 
     addEventListener("click", function (e) {
         if (e.clientX >= monster.x - 10 && monster.x + 175 >= e.clientX
@@ -52,12 +66,13 @@ function callEventListeners() {
         {
             monstersCaught++;
             reset();
-            //interval = interval / divideSpeed;
+            UpdatedSpeed = UpdatedSpeed / divideSpeed;
             then = Date.now();
         }
     }, false);
 
     _rScore.addEventListener("click", ResetScore, false);
+    _rSpeed.addEventListener("click", ResetSpeed, false);
     
 }
 
@@ -87,10 +102,14 @@ var render = function () {
 var main = function () {
     var now = Date.now();
     var delta = now - then;
-
+    
+    if (delta > UpdatedSpeed) {
+        reset();
+    }
     render();
 
-    then = now;
+    if (delta > UpdatedSpeed)
+    then = Date.now();
 
     requestAnimationFrame(main);
 };
